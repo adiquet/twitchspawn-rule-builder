@@ -17,5 +17,6 @@ declare(strict_types=1);
     <nav>
       <a href="builder.php">Build new</a>
       <a href="import.php">Import / fix a file</a>
+      <button type="button" id="playbook-toggle" class="btn small">📖 Playbook</button>
     </nav>
   </header>

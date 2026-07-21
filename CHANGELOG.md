@@ -11,6 +11,15 @@ gets its own commit.
 
 ## [Unreleased]
 
+### Added
+- **Playbook panel.** A "📖 Playbook" button in the header (every page) slides in a right-hand
+  reference panel: rule shape, the blank-line-vs-comment-only-line gotcha, a one-line summary of
+  every action and comparator, how `DISPLAYING` messages work, a list of mistakes this tool
+  catches for you, and a link out to the full
+  [official TwitchSpawn GitBook](https://igoodie.gitbook.io/twitchspawn/) for anything deeper
+  (item/entity IDs, NBT syntax, placeholders). Closes via its own ✕, clicking the backdrop, or
+  Escape. (`src/View/templates/header.php`, `footer.php`, `public/assets/css/style.css`)
+
 ### Fixed
 - **Bracket-mismatch warnings now suggest a fix.** `DISPLAYING_UNBALANCED_BRACKETS` and
   `NBT_UNBALANCED_BRACKETS` used to just say *what* kind of bracket problem was found. They
