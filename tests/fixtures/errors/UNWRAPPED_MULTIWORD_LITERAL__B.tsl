@@ -1,0 +1,3 @@
+DROP stick 2
+ ON Twitch Chat Message
+ WITH message CONTAINS hello there friend

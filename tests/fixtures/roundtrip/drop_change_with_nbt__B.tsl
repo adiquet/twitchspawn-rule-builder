@@ -1,0 +1,6 @@
+DROP %minecraft:diamond_sword{display:{Name:"Sword of the Chosen One"}}% 1
+ ON Donation
+ WITH amount > 50
+
+CHANGE main-hand INTO %minecraft:apple{display:{Name:"Cool Apple"}}% 2
+ ON Twitch Follow

@@ -1,0 +1,5 @@
+EITHER
+ CHANCE 30 PERCENT DROP stick 1
+ OR
+ CHANCE 30 PERCENT DROP diamond 1
+ ON Twitch Follow

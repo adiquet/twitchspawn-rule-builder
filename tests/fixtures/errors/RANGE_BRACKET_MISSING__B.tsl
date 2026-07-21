@@ -1,0 +1,3 @@
+DROP stick 2
+ ON Donation
+ WITH amount IN RANGE 100,200

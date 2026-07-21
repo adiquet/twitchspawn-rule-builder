@@ -1,0 +1,11 @@
+FOR ${viewers} TIMES SUMMON silverfish ~ ~2 ~ %{CustomName:"${actor}'s Silver Army", CustomNameVisible:1}%
+ DISPLAYING %[
+  {text:"and brought some tough friends!"}
+ ]%
+ ON Twitch Host
+
+FOR ${raiders} TIMES SUMMON zombie ~ ~2 ~ %{CustomName:"${actor}'s Army", CustomNameVisible:1, ArmorItems:[{},{},{},{Count:1,id:leather_helmet}]}%
+ DISPLAYING %[
+  {text:"and brought some friends!"}
+ ]%
+ ON Twitch Raid

@@ -1,0 +1,1 @@
+DROP stick 2 WITH amount >= 10 ON Donation

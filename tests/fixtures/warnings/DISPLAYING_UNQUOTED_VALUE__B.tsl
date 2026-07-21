@@ -1,0 +1,2 @@
+DROP minecraft:diamond_sword DISPLAYING [{text:hello}]
+ ON Donation

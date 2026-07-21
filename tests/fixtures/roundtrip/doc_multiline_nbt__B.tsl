@@ -1,0 +1,15 @@
+EXECUTE %/effect give @p minecraft:blindness 30 255%
+ %/playsound entity.enderman.death player @p ~ ~ ~ 10 .5%
+ %/summon chicken ~8 ~10 ~8
+  {Passengers:[{id:wither_skeleton,PersistenceRequired:1,Silent:1,HandItems:
+  [{Count:1,id:diamond_sword,tag:{Enchantments:[{id:sharpness,lvl:5},
+  {id:knockback,lvl:2},{id:fire_aspect,lvl:2},{id:unbreaking,lvl:3}]}},
+  {Count:1,id:shield,tag:{Enchantments:[{id:unbreaking,lvl:3}]}}],
+  CustomName:"\"Chicken Rider of Doom\"",ActiveEffects:
+  [{Id:1,Amplifier:1,Duration:999999},{Id:5,Amplifier:1,Duration:999999},
+  {Id:10,Amplifier:1,Duration:999999},{Id:11,Amplifier:0,Duration:999999},
+  {Id:12,Amplifier:0,Duration:999999},{Id:21,Amplifier:0,Duration:999999},
+  {Id:22,Amplifier:0,Duration:999999},{Id:23,Amplifier:0,Duration:999999},
+  {Id:28,Amplifier:0,Duration:999999}]}]}%
+ ON Twitch Host
+ WITH viewers >= 100

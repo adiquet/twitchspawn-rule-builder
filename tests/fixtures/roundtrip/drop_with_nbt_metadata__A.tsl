@@ -1,0 +1,3 @@
+DROP %minecraft:wool{display:{Name:"Fancy Wool"}}% 2 14
+ ON Donation
+ WITH amount IN RANGE [1,100]

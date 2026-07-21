@@ -1,0 +1,11 @@
+EITHER
+ SUMMON llama ~ ~ ~ %{CustomName:"\"${actor}\"",CustomNameVisible:1}%
+ DISPLAYING %[
+  {text:"and and summoned a llama in their likeness."}
+ ]%
+ OR
+ SUMMON parrot ~ ~ ~ %{CustomName:"\"${actor}\"",CustomNameVisible:1}%
+ DISPLAYING %[
+  {text:"and and summoned a parrot in their likeness."}
+ ]%
+ ON Twitch Follow

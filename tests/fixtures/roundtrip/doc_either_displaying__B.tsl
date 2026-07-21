@@ -1,0 +1,14 @@
+EITHER
+ NOTHING
+ OR DROP diamond 2
+ ON Twitch Follow
+
+EXECUTE %/weather thunder%
+ DISPLAYING %[{text:"The weather is stormy today!", color:"dark_purple"}]%
+ ON Twitch Raid
+ WITH raiders > 100
+
+EXECUTE %/effect give @p minecraft:blindness 30 255%
+ %/playsound entity.enderman.death player @p ~ ~ ~ 10 .5%
+ ON Twitch Host
+ WITH viewers >= 100

@@ -1,0 +1,7 @@
+# Big donation reward
+DROP minecraft:diamond_block 4
+ ON Donation
+ WITH amount IN RANGE [50,999]
+
+CHANGE main-hand INTO minecraft:golden_apple
+ ON Twitch Follow

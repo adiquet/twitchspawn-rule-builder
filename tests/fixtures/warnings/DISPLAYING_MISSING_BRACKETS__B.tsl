@@ -1,0 +1,5 @@
+DROP minecraft:diamond_sword DISPLAYING %here is some text%
+ ON Donation
+ WITH actor IS aNaturalCause
+ WITH message IS %Hello to you sir%
+ WITH amount IS 5

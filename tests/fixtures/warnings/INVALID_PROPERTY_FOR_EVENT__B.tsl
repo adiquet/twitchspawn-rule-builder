@@ -1,0 +1,3 @@
+DROP stick 2
+ ON Twitch Follow
+ WITH amount >= 10

@@ -1,0 +1,3 @@
+EXECUTE %/say hi%
+ DISPLAYING [{text:"hi"]
+ ON Twitch Follow

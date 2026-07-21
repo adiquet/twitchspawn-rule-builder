@@ -1,0 +1,3 @@
+DROP stick 2
+ ON Tiltify Donation
+ WITH amount >= 10
