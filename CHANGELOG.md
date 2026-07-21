@@ -15,8 +15,13 @@ gets its own commit.
 - **Playbook panel stays open while you edit.** It was a modal at first — a backdrop dimmed and
   blocked the page, and clicking outside the panel closed it. Now it's a docked reference panel:
   no backdrop, clicking into form fields behind it doesn't close it, and on screens wide enough
-  (≥760px) the page content shifts left so nothing hides behind it. Only closes via its ✕ or
-  Escape. (`src/View/templates/footer.php`, `public/assets/css/style.css`)
+  (≥760px) the page content stays clear of it so nothing hides behind it. Only closes via its ✕
+  or Escape. (`src/View/templates/footer.php`, `public/assets/css/style.css`)
+- **Playbook panel: main content no longer shrinks needlessly.** The first pass reserved space
+  for the panel by shrinking the page's normal 960px centered column, which left a large dead
+  gap on wide monitors (the column was already narrower than the screen, and the reservation
+  compounded that instead of accounting for it). Now the page drops its reading-width cap while
+  the panel's open and fills the actual available width up to it. (`public/assets/css/style.css`)
 
 ### Added
 - **Playbook panel.** A "📖 Playbook" button in the header (every page) slides in a right-hand

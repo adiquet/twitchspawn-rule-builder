@@ -199,10 +199,11 @@ table.summary-table td, table.summary-table th { border: 1px solid var(--border)
 header.site-header nav .btn { margin-left: 16px; }
 
 /* Playbook is a docked reference panel, not a modal — no backdrop. On wide-enough screens the
-   page content shifts left to stay clear of it, so it can be left open while you edit. */
-.page { transition: padding-right 0.25s ease; }
+   page content stays clear of it by reserving its width on the right, rather than shrinking to
+   a smaller centered column — the 960px reading-width cap only makes sense when there's nothing
+   else on screen competing for space. */
 @media (min-width: 760px) {
-  body.playbook-open .page { padding-right: 424px; }
+  body.playbook-open .page { max-width: none; margin-right: 424px; }
 }
 
 .playbook-panel {
