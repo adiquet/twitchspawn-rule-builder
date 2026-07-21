@@ -198,16 +198,12 @@ table.summary-table td, table.summary-table th { border: 1px solid var(--border)
 
 header.site-header nav .btn { margin-left: 16px; }
 
-.playbook-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
+/* Playbook is a docked reference panel, not a modal — no backdrop. On wide-enough screens the
+   page content shifts left to stay clear of it, so it can be left open while you edit. */
+.page { transition: padding-right 0.25s ease; }
+@media (min-width: 760px) {
+  body.playbook-open .page { padding-right: 424px; }
 }
-.playbook-backdrop.open { opacity: 1; pointer-events: auto; }
 
 .playbook-panel {
   position: fixed;

@@ -11,6 +11,13 @@ gets its own commit.
 
 ## [Unreleased]
 
+### Changed
+- **Playbook panel stays open while you edit.** It was a modal at first — a backdrop dimmed and
+  blocked the page, and clicking outside the panel closed it. Now it's a docked reference panel:
+  no backdrop, clicking into form fields behind it doesn't close it, and on screens wide enough
+  (≥760px) the page content shifts left so nothing hides behind it. Only closes via its ✕ or
+  Escape. (`src/View/templates/footer.php`, `public/assets/css/style.css`)
+
 ### Added
 - **Playbook panel.** A "📖 Playbook" button in the header (every page) slides in a right-hand
   reference panel: rule shape, the blank-line-vs-comment-only-line gotcha, a one-line summary of

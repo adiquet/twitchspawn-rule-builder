@@ -1,7 +1,6 @@
 <?php declare(strict_types=1); ?>
 </div>
 
-<div class="playbook-backdrop" id="playbook-backdrop"></div>
 <aside class="playbook-panel" id="playbook-panel" aria-hidden="true">
   <button type="button" class="icon-btn close-btn" id="playbook-close" aria-label="Close playbook">✕</button>
   <h2>Playbook</h2>
@@ -75,18 +74,19 @@
 (function () {
   var toggle = document.getElementById('playbook-toggle');
   var panel = document.getElementById('playbook-panel');
-  var backdrop = document.getElementById('playbook-backdrop');
   var closeBtn = document.getElementById('playbook-close');
   if (!toggle || !panel) return;
 
+  // A docked reference panel, not a modal: stays open while you click around and edit the
+  // form behind it (no backdrop, nothing blocks the page) until you explicitly close it.
   function open() {
     panel.classList.add('open');
-    backdrop.classList.add('open');
+    document.body.classList.add('playbook-open');
     panel.setAttribute('aria-hidden', 'false');
   }
   function close() {
     panel.classList.remove('open');
-    backdrop.classList.remove('open');
+    document.body.classList.remove('playbook-open');
     panel.setAttribute('aria-hidden', 'true');
   }
 
@@ -94,7 +94,6 @@
     if (panel.classList.contains('open')) { close(); } else { open(); }
   });
   closeBtn.addEventListener('click', close);
-  backdrop.addEventListener('click', close);
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') close();
   });
