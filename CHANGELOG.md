@@ -12,6 +12,11 @@ gets its own commit.
 ## [Unreleased]
 
 ### Changed
+- **Builder UI allows two levels of meta-action nesting instead of one** (e.g. an `EITHER` inside a
+  `BOTH` step is now selectable). The cap exists to keep the branch-editing form tractable, not
+  because the grammar has a limit — `Parser.php` already handled arbitrary depth via import. Was a
+  boolean `allowMeta` flag; now a `metaDepth` counter compared against `MAX_META_DEPTH = 2`.
+  (`public/assets/js/builder.js`)
 - **NBT data field is now a resizable textarea, like the chat/title message field.** It was a
   single-line `<input>`, cramped for anything beyond a trivial NBT snippet. Same treatment as
   `DISPLAYING`: still generated as one TSL token under the hood, so line breaks typed into the

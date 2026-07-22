@@ -218,7 +218,7 @@
       ]),
       el('div', { class: 'field-row' }, [
         el('label', {}, ['Action']),
-        renderActionEditor(rule.action, ['rules', index, 'action'], true),
+        renderActionEditor(rule.action, ['rules', index, 'action'], 0),
       ]),
       el('div', { class: 'field-row' }, [
         el('label', {}, ['Event']),
@@ -282,9 +282,12 @@
     ]);
   }
 
-  /** allowMeta caps recursion at one level, per the v1 scope decision (meta actions can wrap a simple action or one other meta action, not arbitrarily deep). */
-  function renderActionEditor(action, path, allowMeta) {
+  /** Caps meta-action (EITHER/BOTH/FOR/REFLECT) recursion at MAX_META_DEPTH levels, per the v1 scope
+   *  decision — deeper real-world files still work via import, the parser itself has no such limit. */
+  const MAX_META_DEPTH = 2;
+  function renderActionEditor(action, path, metaDepth) {
     const wrap = el('div', { class: 'action-editor' });
+    const allowMeta = metaDepth < MAX_META_DEPTH;
     const actionNames = Object.keys(GRAMMAR.actions).filter((a) => allowMeta || !GRAMMAR.actions[a].wraps || GRAMMAR.actions[a].wraps === 'none');
 
     wrap.appendChild(select(actionNames, action.action, (v) => {
@@ -302,7 +305,7 @@
     if (def.wraps === 'single') {
       wrap.appendChild(el('div', { class: 'nested-action' }, [
         el('label', {}, [action.action === 'FOR' ? 'Action to repeat:' : 'Action to reflect:']),
-        renderActionEditor(action.children[0].action, path.concat(['children', 0, 'action']), false),
+        renderActionEditor(action.children[0].action, path.concat(['children', 0, 'action']), metaDepth + 1),
       ]));
     } else if (def.wraps === 'multiple') {
       const branchesWrap = el('div', { class: 'branches' });
@@ -322,7 +325,7 @@
               onclick: () => { action.children.splice(i, 1); render(); },
             }, ['✕']) : null,
           ]),
-          renderActionEditor(child.action, path.concat(['children', i, 'action']), false),
+          renderActionEditor(child.action, path.concat(['children', i, 'action']), metaDepth + 1),
         ]);
         branchesWrap.appendChild(branch);
       });

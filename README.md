@@ -90,9 +90,10 @@ correctly under a `/twitchspawn`-style path prefix).
 
 ## Known v1 scope limits
 
-- The builder UI caps meta-action nesting (`EITHER`/`BOTH`/`FOR`/`REFLECT`) at one level deep. The parser
-  itself has no such limit — importing a deeper real-world file still works, it just can't be built fresh
-  through the nested form past that depth.
+- The builder UI caps meta-action nesting (`EITHER`/`BOTH`/`FOR`/`REFLECT`) at two levels deep (e.g. an
+  `EITHER` inside a `BOTH` step is fine, but not a third level inside that). The parser itself has no
+  such limit — importing a deeper real-world file still works, it just can't be built fresh through the
+  nested form past that depth.
 - NBT data and Minecraft commands are treated as opaque text, not deeply validated — those are their own
   large grammars tied to Minecraft's own version-specific registries. `DROP`/`CHANGE` get a dedicated NBT
   field (appended directly after the item ID, e.g. `minecraft:diamond_sword{Enchantments:[...]}`) and
