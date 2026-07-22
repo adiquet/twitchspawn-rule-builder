@@ -416,7 +416,9 @@
       }
       if (name === 'nbt') {
         const isEmbedded = action.action === 'DROP' || action.action === 'CHANGE';
-        const input = textInput(action.params[name], (v) => { action.params[name] = v; scheduleGenerate(); },
+        // Stored/generated as a single TSL token, so line breaks the user types are collapsed to
+        // spaces — the bigger box is for comfortable editing, not for a genuinely multi-line value.
+        const input = textareaInput(action.params[name], (v) => { action.params[name] = v.replace(/\r\n|\r|\n/g, ' '); scheduleGenerate(); },
           { placeholder: 'e.g. {Enchantments:[{id:"minecraft:sharpness",lvl:5}]}' });
         wrap.appendChild(el('div', { class: 'field-row' }, [
           el('label', {}, [label]),

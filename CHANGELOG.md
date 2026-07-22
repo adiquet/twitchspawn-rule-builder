@@ -11,6 +11,14 @@ gets its own commit.
 
 ## [Unreleased]
 
+### Changed
+- **NBT data field is now a resizable textarea, like the chat/title message field.** It was a
+  single-line `<input>`, cramped for anything beyond a trivial NBT snippet. Same treatment as
+  `DISPLAYING`: still generated as one TSL token under the hood, so line breaks typed into the
+  box are collapsed to spaces on input rather than preserved literally. Shared by
+  `builder.js`, so this covers the builder, saved-ruleset edit, and import pages alike.
+  (`public/assets/js/builder.js`)
+
 ### Added
 - **New warning: `NBT_ITEM_STACK_CLOSED_EARLY`.** Catches a common item-stack mistake: an
   `{id:...}` compound that closes immediately, right before `,Count` or `,tag` follows — item
