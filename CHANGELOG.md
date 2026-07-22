@@ -11,6 +11,21 @@ gets its own commit.
 
 ## [Unreleased]
 
+### Added
+- **New warning: `NBT_ITEM_STACK_CLOSED_EARLY`.** Catches a common item-stack mistake: an
+  `{id:...}` compound that closes immediately, right before `,Count` or `,tag` follows — item
+  stacks are always shaped `{id:..., Count:..., tag:{...}}` as one compound, so this almost
+  always means the `}` landed one key too early. This only needs to recognize that universal
+  id/Count/tag shape, not any per-item or per-entity NBT schema, so it stays generic and doesn't
+  need updating as Minecraft versions/mods change. (`src/Grammar/Validator.php`)
+
+### Fixed
+- **`DISPLAYING` content checks no longer false-positive on placeholders inside quoted text.**
+  `{$key: "value"}` heuristics (bare-word text components, unquoted values) were scanning the
+  raw string with no awareness of `"..."` boundaries, so a `${actor}`-style placeholder sitting
+  inside a quoted string got misread as its own malformed `{actor}` object. Quoted-string
+  interiors are now blanked out before those checks run. (`src/Grammar/Validator.php`)
+
 ### Changed
 - **Playbook panel stays open while you edit.** It was a modal at first — a backdrop dimmed and
   blocked the page, and clicking outside the panel closed it. Now it's a docked reference panel:

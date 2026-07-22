@@ -104,6 +104,17 @@ final class Validator
                             'nbt'
                         );
                     }
+
+                    $itemCloseIssue = self::findPrematureItemStackClose($nbtValue);
+                    if ($itemCloseIssue !== null) {
+                        $warnings[] = new ParseWarning(
+                            'NBT_ITEM_STACK_CLOSED_EARLY',
+                            $itemCloseIssue,
+                            $rule->sourceLine,
+                            $ruleIndex,
+                            'nbt'
+                        );
+                    }
                 }
 
                 if ($a->action === 'EITHER' && !empty($a->children)) {
@@ -212,12 +223,67 @@ final class Validator
         return null;
     }
 
+    /**
+     * Heuristic for a common item-stack mistake, generic to Minecraft NBT rather than tied to
+     * any specific item/entity: an item stack is always shaped {id:..., Count:..., tag:{...}}
+     * as one compound, so an {id:...} that closes immediately and is followed right away by
+     * ",Count" or ",tag" almost always means the closing "}" landed one key too early — those
+     * were meant to be siblings inside the same compound, not outside it. This only needs to
+     * recognize that universal id/Count/tag shape, not any per-entity or per-item schema.
+     */
+    private static function findPrematureItemStackClose(string $s): ?string
+    {
+        $pattern = '/\{\s*id\s*:\s*("(?:[^"\\\\]|\\\\.)*"|[^{},]+?)\s*(\})\s*,\s*(Count|tag)\b/';
+        if (!preg_match($pattern, $s, $m, PREG_OFFSET_CAPTURE)) {
+            return null;
+        }
+        $closeBracePos = (int) $m[2][1];
+        $key = $m[3][0];
+        $context = self::contextBefore($s, $closeBracePos + 1);
+
+        return "An item stack's \"{id:...}\" closes right after \"{$context}\", but \"{$key}\" " .
+            "follows immediately after. Item stacks are usually one compound shaped " .
+            "{id:..., Count:..., tag:{...}} — if \"{$key}\" was meant to be part of the same " .
+            "item, move this \"}\" to close after \"{$key}\"'s value instead, not right after \"id\".";
+    }
+
     /** Trimmed snippet of $s leading up to (not including) $pos, for "right after ..." messages. */
     private static function contextBefore(string $s, int $pos, int $window = 24): string
     {
         $start = max(0, $pos - $window);
         $snippet = rtrim(substr($s, $start, $pos - $start));
         return ($start > 0 ? '…' : '') . $snippet;
+    }
+
+    /** Replaces the inside of every "..." literal (not the quotes themselves) with spaces, so
+     *  braces/words that only appear inside quoted text don't get mistaken for JSON structure. */
+    private static function maskQuotedStrings(string $s): string
+    {
+        $out = '';
+        $inString = false;
+        $len = strlen($s);
+        for ($i = 0; $i < $len; $i++) {
+            $ch = $s[$i];
+            if ($inString) {
+                if ($ch === '\\' && $i + 1 < $len) {
+                    $out .= '  ';
+                    $i++; // mask the escaped character too, e.g. the " in \"
+                    continue;
+                }
+                if ($ch === '"') {
+                    $inString = false;
+                    $out .= $ch;
+                    continue;
+                }
+                $out .= ' ';
+                continue;
+            }
+            if ($ch === '"') {
+                $inString = true;
+            }
+            $out .= $ch;
+        }
+        return $out;
     }
 
     /**
@@ -239,6 +305,11 @@ final class Validator
             $seen[$key] = true;
             $issues[] = ['code' => $code, 'message' => $message];
         };
+
+        // Blank out the inside of "..." string literals first: a brace or bare word that only
+        // exists inside quoted text (e.g. a "${actor}" placeholder) isn't JSON structure, so it
+        // shouldn't be mistaken for an unquoted value or a malformed text-component object.
+        $text = self::maskQuotedStrings($text);
 
         if (preg_match_all('/\{([^{}]*)\}/', $text, $objMatches)) {
             foreach ($objMatches[1] as $body) {
